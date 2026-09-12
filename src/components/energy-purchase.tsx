@@ -123,8 +123,11 @@ export function EnergyPurchase({ config }: { config: ServiceConfig }) {
       <section id="steps" className="relative z-10 border-y border-border bg-card/35">
         <div className="mx-auto max-w-5xl px-5 py-10 sm:px-8 sm:py-14">
           <div className="max-w-2xl"><SectionEyebrow>BEFORE YOU SEND</SectionEyebrow><h2 className="mt-2 text-2xl font-black tracking-tight sm:text-3xl">转 USDT 前的 4 项检查</h2><p className="mt-3 text-sm leading-6 text-muted-foreground">按顺序确认付款地址、到账状态和有效时间，避免能量发放到错误地址。</p></div>
-          <div className="mt-8 grid gap-3 md:grid-cols-2">
-            {checkItems.map(([title, description], index) => <div key={title} className="rounded-xl border border-border bg-card p-5"><div className="flex items-start gap-4"><span className="grid size-9 shrink-0 place-items-center rounded-full border border-primary/40 bg-primary/10 font-mono text-sm font-bold text-primary">{index + 1}</span><div className="min-w-0"><div className="flex items-center gap-2"><CheckCircle2 size={16} className="shrink-0 text-accent" /><h3 className="font-black">{title}</h3></div><p className="mt-3 text-sm leading-7 text-muted-foreground">{description}</p></div></div></div>)}
+          <div className="relative mt-8 max-w-3xl">
+            <div className="absolute bottom-6 left-[17px] top-6 w-px bg-border" />
+            <div className="relative space-y-3">
+              {checkItems.map(([title, description], index) => <div key={title} className="relative flex gap-4 rounded-xl border border-border bg-card p-4 sm:p-5"><span className="relative z-10 grid size-9 shrink-0 place-items-center rounded-full border border-primary/40 bg-card font-mono text-sm font-bold text-primary shadow-[0_0_0_5px_var(--background)]">{index + 1}</span><div className="min-w-0"><div className="flex items-center gap-2"><CheckCircle2 size={16} className="shrink-0 text-accent" /><h3 className="font-black">{title}</h3></div><p className="mt-3 text-sm leading-7 text-muted-foreground">{description}</p></div></div>)}
+            </div>
           </div>
           <div className="mt-5 flex items-start gap-3 rounded-xl border border-destructive/30 bg-destructive/10 px-4 py-3 text-sm leading-6 text-destructive"><CircleHelp size={17} className="mt-1 shrink-0" /><p><span className="font-black">重要：</span>如果对方地址的 USDT 余额为 0，请优先选择 131,000 Energy，避免能量不足。</p></div>
         </div>
