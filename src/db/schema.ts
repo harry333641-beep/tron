@@ -118,3 +118,10 @@ export const userRelations = relations(user, ({ many }) => ({
 //   // on user_id, and without this each one is a full table scan.
 //   (t) => [index("note_user_idx").on(t.userId)],
 // );
+
+export const serviceConfig = pgTable("service_config", {
+  id: text("id").primaryKey(),
+  telegramUrl: text("telegram_url").notNull(),
+  receivingAddress: text("receiving_address").notNull(),
+  updatedAt: timestamp("updated_at").notNull().defaultNow(),
+});
