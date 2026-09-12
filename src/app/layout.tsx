@@ -11,7 +11,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="zh-CN" className="dark">
+    <html lang="zh-CN">
       <body className="min-h-dvh antialiased">
         {children}
         {/* Imagine Make preview runtime — only active when framed by the editor. */}
