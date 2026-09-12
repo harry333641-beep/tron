@@ -82,7 +82,7 @@ export default function Home() {
 
   return (
     <main className="min-h-dvh overflow-x-hidden bg-background text-foreground">
-      <div className="pointer-events-none fixed inset-0 -z-0 opacity-50" aria-hidden="true">
+      <div className="pointer-events-none fixed inset-0 -z-0 w-screen max-w-full overflow-hidden opacity-50" aria-hidden="true">
         <div className="absolute left-[-12rem] top-[-10rem] h-[30rem] w-[30rem] rounded-full bg-primary/10 blur-[120px]" />
         <div className="absolute right-[-10rem] top-[32rem] h-[24rem] w-[24rem] rounded-full bg-primary/8 blur-[120px]" />
       </div>
@@ -138,7 +138,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="relative mx-auto w-full max-w-md lg:ml-auto">
+        <div className="relative mx-auto min-w-0 w-full max-w-md overflow-hidden lg:ml-auto">
           <div className="absolute -inset-8 rounded-[2rem] border border-primary/10 bg-primary/5 blur-xl" />
           <div className="relative overflow-hidden rounded-2xl border border-border bg-card shadow-2xl shadow-black/30">
             <div className="flex items-center justify-between border-b border-border bg-secondary/55 px-5 py-4">
