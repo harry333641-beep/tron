@@ -21,6 +21,17 @@ type ServiceConfig = {
   receivingAddress: string;
 };
 
+type EnergyTier = {
+  price: string;
+  energy: string;
+  label: string;
+};
+
+const energyTiers: EnergyTier[] = [
+  { price: "2", energy: "6.5K", label: "65,000 Energy" },
+  { price: "4", energy: "131K", label: "131,000 Energy" },
+];
+
 const faqs = [
   ["连接钱包安全吗？", "本服务不要求连接钱包。你只需向页面展示的收款地址转入对应 TRX，不会索要私钥或助记词。"],
   ["什么时候发送 USDT？", "通常约 3 秒收到能量。确认能量到账后，请在 1 小时有效期内完成 USDT TRC-20 转账。"],
@@ -38,6 +49,7 @@ function SectionEyebrow({ children }: { children: ReactNode }) {
 }
 
 export function EnergyPurchase({ config }: { config: ServiceConfig }) {
+  const [selectedTier, setSelectedTier] = useState(energyTiers[0]);
   const [copied, setCopied] = useState(false);
 
   async function copyAddress() {
@@ -87,10 +99,12 @@ export function EnergyPurchase({ config }: { config: ServiceConfig }) {
               <span className="min-w-0 flex-1 truncate text-center font-mono text-sm font-bold text-accent sm:text-base">{config.receivingAddress}</span>
               <Button type="button" variant="ghost" size="icon" onClick={copyAddress} aria-label="复制收款地址" className="size-9 shrink-0 rounded-lg bg-muted/80 text-accent hover:bg-primary/15 hover:text-accent">{copied ? <Check size={18} strokeWidth={2.5} /> : <Copy size={18} />}</Button>
             </div>
-            <div className="mt-4 flex items-center justify-center gap-2 rounded-lg border border-accent/20 bg-accent/5 px-3 py-2 text-center text-xs font-bold text-accent"><Zap size={15} fill="currentColor" />向此地址转账 2 TRX 即刻自动到账 6.5K 能量</div>
+            <div className="mt-4 flex items-center justify-center gap-2 rounded-lg border border-accent/20 bg-accent/5 px-3 py-2 text-center text-xs font-bold text-accent"><Zap size={15} fill="currentColor" />向此地址转账 {selectedTier.price} TRX 即刻自动到账 {selectedTier.energy} 能量</div>
             <div className="mt-3 grid grid-cols-2 gap-2">
-              <div className="min-w-0 rounded-lg border border-border bg-background/70 px-3 py-2.5 text-center"><span className="block text-xs font-black text-foreground">2 TRX</span><span className="mt-1 block truncate text-[11px] font-bold text-accent">65,000 Energy</span></div>
-              <div className="min-w-0 rounded-lg border border-border bg-background/70 px-3 py-2.5 text-center"><span className="block text-xs font-black text-foreground">4 TRX</span><span className="mt-1 block truncate text-[11px] font-bold text-accent">131,000 Energy</span></div>
+              {energyTiers.map((tier) => {
+                const isSelected = tier.price === selectedTier.price;
+                return <Button key={tier.price} type="button" variant="ghost" aria-pressed={isSelected} onClick={() => setSelectedTier(tier)} className={`h-auto min-w-0 rounded-lg border px-3 py-2.5 text-center transition-colors ${isSelected ? "border-primary bg-primary/15 text-foreground shadow-[0_0_18px_var(--primary-glow)]" : "border-border bg-background/70 text-muted-foreground hover:border-primary/50 hover:bg-primary/5"}`}><span className="block text-xs font-black">{tier.price} TRX {isSelected && <Check size={13} className="ml-1 inline text-primary" strokeWidth={2.5} />}</span><span className="mt-1 block truncate text-[11px] font-bold text-accent">{tier.label}</span></Button>;
+              })}
             </div>
             <div className="my-5 border-t border-border" />
             <Button type="button" onClick={() => window.open(config.telegramUrl, "_blank", "noopener,noreferrer")} className="h-12 w-full gap-2 rounded-xl bg-accent font-black text-accent-foreground shadow-[0_12px_28px_var(--primary-glow)] transition-transform duration-200 ease-out hover:-translate-y-0.5 hover:bg-accent/90"><ArrowUpRight size={19} strokeWidth={2.5} />前往TG机器人自助租赁</Button>
