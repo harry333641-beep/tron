@@ -1,6 +1,6 @@
 ---
 name: "波场能量购买与租赁"
-description: "面向中文用户的波场 Energy 套餐购买与 TRX 转入式能量租赁入口。"
+description: "面向中文用户的波场 Energy 套餐购买与 TRX 转入式能量租赁入口，用一张清晰的业务单据完成选择、付款和到账后的转账。"
 colors:
   background: "oklch(0.985 0.014 92)"
   foreground: "oklch(0.16 0.012 45)"
@@ -28,9 +28,9 @@ colors:
   sidebar-foreground: "oklch(0.16 0.012 45)"
 typography:
   display:
-    fontFamily: "heavy system sans with compact tracking"
+    fontFamily: "heavy system sans with compact tracking and oversized editorial breaks."
   body:
-    fontFamily: "system sans with generous line-height"
+    fontFamily: "system sans with generous line-height."
   mono:
     fontFamily: "ui-monospace, SFMono-Regular, \"SF Mono\", Menlo, Consolas, monospace"
 rounded:
@@ -47,7 +47,7 @@ rounded:
 
 ## Overview
 
-米白收据纸上的能量柜台：黑色粗描边、黄色闪电标识、红色业务重点和可复制的深色收款地址模块。
+米白收据纸上的能量柜台：页面像一张可操作的业务单据，选择卡、深色收款地址模块和红色业务重点组成清晰的购买路径。
 
 ## Colors
 
@@ -64,18 +64,19 @@ Declared in `globals.css` as `--color-*` and mirrored in the frontmatter. Use th
 
 ## Typography
 
-- Headings: heavy system sans with compact tracking
-- Body: system sans with generous line-height
-- Data labels: compact monospace for wallet addresses and transaction values
+- Headings: heavy system sans with compact tracking and oversized editorial breaks.
+- Body: system sans with generous line-height.
+- Data labels: compact monospace for wallet addresses and transaction values.
 
-- Display: `heavy system sans with compact tracking`
-- Body: `system sans with generous line-height`
+- Display: `heavy system sans with compact tracking and oversized editorial breaks.`
+- Body: `system sans with generous line-height.`
 - Mono: `ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace`
 
 ## Layout
 
-- Radius / shadow / spacing rhythm: 12–20px rounded cards, 2px dark outlines, hard offset shadows for key controls.
-- Shared components: Button, native disclosure FAQ, bordered package cards, copy-address panel.
+- Radius / shadow / spacing rhythm: 12–24px rounded cards, 2px dark outlines, hard offset shadows for key controls.
+- Shared components: Button, native disclosure FAQ, bordered package cards, copy-address panel, numbered steps.
+- Responsive rule: the desktop view uses a two-column purchase moment; mobile stacks the action path in order.
 
 ## Shapes
 

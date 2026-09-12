@@ -2,7 +2,7 @@
 # Design System
 
 ## Direction
-米白收据纸上的能量柜台：黑色粗描边、黄色闪电标识、红色业务重点和可复制的深色收款地址模块。
+米白收据纸上的能量柜台：页面像一张可操作的业务单据，选择卡、深色收款地址模块和红色业务重点组成清晰的购买路径。
 
 ## Palette
 | Token | Value |
@@ -16,13 +16,14 @@
 | success / warning / danger | mint confirmation / yellow warning / red emphasis |
 
 ## Typography
-- Headings: heavy system sans with compact tracking
-- Body: system sans with generous line-height
-- Data labels: compact monospace for wallet addresses and transaction values
+- Headings: heavy system sans with compact tracking and oversized editorial breaks.
+- Body: system sans with generous line-height.
+- Data labels: compact monospace for wallet addresses and transaction values.
 
 ## Tokens & primitives
-- Radius / shadow / spacing rhythm: 12–20px rounded cards, 2px dark outlines, hard offset shadows for key controls.
-- Shared components: Button, native disclosure FAQ, bordered package cards, copy-address panel.
+- Radius / shadow / spacing rhythm: 12–24px rounded cards, 2px dark outlines, hard offset shadows for key controls.
+- Shared components: Button, native disclosure FAQ, bordered package cards, copy-address panel, numbered steps.
+- Responsive rule: the desktop view uses a two-column purchase moment; mobile stacks the action path in order.
 
 ## Voice & tone
 中文、步骤化、直接说明动作；不要求用户提供地址，不索要私钥，明确到账与有效期。

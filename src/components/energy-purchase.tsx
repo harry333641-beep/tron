@@ -2,6 +2,7 @@
 
 import { useState, type ReactNode } from "react";
 import {
+  ArrowDown,
   ArrowRight,
   Check,
   ChevronDown,
@@ -10,6 +11,7 @@ import {
   ExternalLink,
   MessageCircle,
   ShieldCheck,
+  Sparkles,
   Zap,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -19,16 +21,66 @@ type ServiceConfig = {
   receivingAddress: string;
 };
 
-const packages = [
-  { energy: "65,000", price: "2", label: "对方地址已有 USDT", accent: "bg-card" },
-  { energy: "131,000", price: "4", label: "对方地址没有 USDT", accent: "bg-destructive/10" },
+type PackageOption = {
+  energy: string;
+  price: string;
+  label: string;
+  note: string;
+  tone: "paper" | "blush";
+};
+
+const packages: PackageOption[] = [
+  {
+    energy: "65,000",
+    price: "2",
+    label: "对方地址已有 USDT",
+    note: "适合普通一笔 TRC-20 转账",
+    tone: "paper",
+  },
+  {
+    energy: "131,000",
+    price: "4",
+    label: "对方地址没有 USDT",
+    note: "余额为 0 时优先选择这一档",
+    tone: "blush",
+  },
 ];
 
 const faqs = [
-  ["需要提供我的钱包地址吗？", "不需要。你只需向页面提供的收款地址转入套餐对应的 TRX，不需要连接钱包，也不会索要私钥。"],
-  ["什么时候发送 USDT？", "确认能量到账后，请在 1 小时有效期内完成 USDT TRC-20 转账。"],
-  ["为什么没有 USDT 要选 131,000？", "收款地址没有 USDT 余额时，交易通常会消耗更多网络资源，建议选择 131,000 Energy。"],
+  [
+    "需要提供我的钱包地址吗？",
+    "不需要。你只需向页面提供的收款地址转入套餐对应的 TRX，不需要连接钱包，也不会索要私钥或助记词。",
+  ],
+  [
+    "什么时候发送 USDT？",
+    "确认能量到账后，请在 1 小时有效期内完成 USDT TRC-20 转账。当前页面展示的是人工履约流程，不会伪造自动到账结果。",
+  ],
+  [
+    "为什么没有 USDT 要选 131,000？",
+    "对方地址没有 USDT 余额时，交易通常会消耗更多网络资源。为了减少转账失败，建议选择 131,000 Energy。",
+  ],
+  [
+    "转入后多久能看到能量？",
+    "通常约 3 秒到账。链上拥堵或人工确认时可能会有波动，如超过预期时间请通过 Telegram 联系客服。",
+  ],
 ];
+
+function SectionLabel({ children }: { children: ReactNode }) {
+  return (
+    <div className="flex items-center gap-3 text-xs font-black uppercase tracking-[0.18em] text-destructive">
+      <span className="h-2 w-2 rounded-full bg-destructive" />
+      {children}
+    </div>
+  );
+}
+
+function StepNumber({ children }: { children: ReactNode }) {
+  return (
+    <span className="grid size-9 shrink-0 place-items-center rounded-full border-2 border-foreground bg-foreground text-sm font-black text-primary">
+      {children}
+    </span>
+  );
+}
 
 export function EnergyPurchase({ config }: { config: ServiceConfig }) {
   const [selectedEnergy, setSelectedEnergy] = useState(packages[0].energy);
@@ -36,9 +88,13 @@ export function EnergyPurchase({ config }: { config: ServiceConfig }) {
   const selected = packages.find((item) => item.energy === selectedEnergy) ?? packages[0];
 
   async function copyAddress() {
-    await navigator.clipboard.writeText(config.receivingAddress);
-    setCopied(true);
-    window.setTimeout(() => setCopied(false), 1800);
+    try {
+      await navigator.clipboard.writeText(config.receivingAddress);
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 1800);
+    } catch {
+      setCopied(false);
+    }
   }
 
   function scrollTo(id: string) {
@@ -46,50 +102,148 @@ export function EnergyPurchase({ config }: { config: ServiceConfig }) {
   }
 
   return (
-    <main className="min-h-dvh overflow-x-hidden bg-background text-foreground">
-      <header className="border-b-2 border-foreground bg-background">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-5 sm:px-8 lg:px-10">
-          <button type="button" onClick={() => scrollTo("top")} className="flex items-center gap-3 text-left">
-            <span className="grid size-11 place-items-center rounded-2xl border-2 border-foreground bg-primary text-primary-foreground shadow-[4px_4px_0_var(--foreground)]"><Zap size={23} fill="currentColor" strokeWidth={2.5} /></span>
-            <span><span className="block text-xs font-black tracking-[0.16em] text-destructive">核心服务</span><span className="mt-0.5 block text-base font-black">USDT 转账能量方案</span></span>
+    <main id="top" className="min-h-dvh overflow-x-hidden bg-background text-foreground">
+      <div className="pointer-events-none fixed inset-x-0 top-0 z-0 h-2 bg-primary" />
+      <header className="relative z-10 border-b-2 border-foreground/15 bg-background/95 backdrop-blur-sm">
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 py-5 sm:px-8 lg:px-10">
+          <button type="button" onClick={() => scrollTo("top")} className="group flex min-w-0 items-center gap-3 text-left">
+            <span className="grid size-12 shrink-0 place-items-center rounded-[1.1rem] border-2 border-foreground bg-primary shadow-[4px_4px_0_var(--foreground)] transition-transform duration-200 ease-out group-hover:-translate-y-0.5">
+              <Zap size={25} fill="currentColor" strokeWidth={2.5} />
+            </span>
+            <span className="min-w-0">
+              <span className="block truncate text-[11px] font-black uppercase tracking-[0.18em] text-destructive">Energy desk / 01</span>
+              <span className="mt-1 block truncate text-base font-black sm:text-lg">波场能量柜台</span>
+            </span>
           </button>
-          <div className="flex items-center gap-3">
-            <button type="button" onClick={() => scrollTo("faq")} className="hidden text-sm font-bold text-muted-foreground hover:text-foreground sm:block">常见问题</button>
-            <Button type="button" onClick={() => window.open(config.telegramUrl, "_blank", "noopener,noreferrer")} size="sm" className="gap-2 rounded-lg border-2 border-foreground bg-primary font-black text-primary-foreground shadow-[3px_3px_0_var(--foreground)]"><MessageCircle size={15} /> 联系客服</Button>
+          <div className="flex shrink-0 items-center gap-3">
+            <button type="button" onClick={() => scrollTo("faq")} className="hidden text-sm font-bold text-muted-foreground transition-colors hover:text-foreground sm:block">常见问题</button>
+            <Button type="button" onClick={() => window.open(config.telegramUrl, "_blank", "noopener,noreferrer")} size="sm" className="gap-2 rounded-lg border-2 border-foreground bg-card font-black shadow-[3px_3px_0_var(--foreground)] hover:bg-primary">
+              <MessageCircle size={15} strokeWidth={2.5} />
+              <span className="hidden sm:inline">联系客服</span>
+              <span className="sm:hidden">客服</span>
+            </Button>
           </div>
         </div>
       </header>
 
-      <section id="top" className="mx-auto max-w-7xl px-5 py-10 sm:px-8 lg:px-10 lg:py-14">
-        <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-start lg:gap-16">
-          <div>
-            <p className="text-sm font-black text-destructive">USDT 转账省费方案 / 01</p>
-            <h1 className="mt-3 max-w-2xl text-5xl font-black leading-[1.03] tracking-[-0.06em] sm:text-6xl">少烧 TRX，<br /><span className="text-destructive">转账更轻松。</span></h1>
-            <p className="mt-5 max-w-xl text-base leading-8 text-muted-foreground">每次转 USDT 前，先补足刚好够用的 Energy。选择套餐、转入对应 TRX，约 3 秒收到能量，到账后马上完成 USDT 转账。</p>
-            <div className="mt-8 flex flex-wrap gap-2"><span className="rounded-full border border-emerald-700/25 bg-emerald-100 px-3 py-1.5 text-xs font-bold text-emerald-800">约 3 秒到账</span><span className="rounded-full border border-emerald-700/25 bg-emerald-100 px-3 py-1.5 text-xs font-bold text-emerald-800">到账后 1 小时有效</span><span className="rounded-full border border-foreground/20 bg-card px-3 py-1.5 text-xs font-bold text-muted-foreground">不连接钱包</span></div>
+      <section className="relative mx-auto max-w-7xl px-5 pb-16 pt-12 sm:px-8 sm:pt-16 lg:px-10 lg:pb-24 lg:pt-20">
+        <div className="grid items-start gap-12 lg:grid-cols-[minmax(0,0.95fr)_minmax(520px,1.05fr)] lg:gap-20">
+          <div className="min-w-0">
+            <SectionLabel>核心服务 / TRON ENERGY</SectionLabel>
+            <h1 className="mt-5 max-w-2xl text-[clamp(3.25rem,7vw,6.6rem)] font-black leading-[0.9] tracking-[-0.085em]">
+              让每一笔
+              <br />
+              <span className="text-destructive">USDT 转账</span>
+              <br />
+              更省 TRX。
+            </h1>
+            <p className="mt-7 max-w-xl text-lg leading-8 text-muted-foreground sm:text-xl">选择需要的 Energy 套餐，转入对应 TRX，约 3 秒收到能量。到账后，在 1 小时内完成 USDT TRC-20 转账。</p>
+            <div className="mt-8 grid max-w-xl grid-cols-2 gap-3 border-y-2 border-foreground py-5 sm:flex sm:flex-wrap sm:gap-5">
+              <div className="flex items-center gap-2 text-sm font-black"><Clock3 size={18} className="text-destructive" />约 3 秒到账</div>
+              <div className="flex items-center gap-2 text-sm font-black"><Sparkles size={18} className="text-destructive" />到账后 1 小时有效</div>
+              <div className="flex items-center gap-2 text-sm font-black"><ShieldCheck size={18} className="text-destructive" />不连接钱包</div>
+            </div>
+            <div className="mt-10 hidden items-center gap-3 text-sm font-black text-muted-foreground lg:flex">
+              <span className="grid size-8 place-items-center rounded-full bg-foreground text-primary">↓</span>
+              向下完成购买步骤
+            </div>
           </div>
 
-          <aside className="min-w-0 rounded-2xl border-2 border-foreground bg-card p-5 shadow-[6px_6px_0_var(--foreground)] sm:p-6">
-            <div className="flex items-start justify-between border-b-2 border-foreground pb-5"><div><p className="text-xs font-black tracking-[0.16em] text-destructive">ORDER DESK</p><h2 className="mt-1 text-2xl font-black">本次购买确认</h2></div><span className="grid size-10 place-items-center rounded-xl border-2 border-foreground bg-primary"><Zap size={19} fill="currentColor" /></span></div>
-            <div className="space-y-4 pt-5"><p className="text-sm font-black">1. 选择 Energy 套餐</p>{packages.map((item) => <button key={item.energy} type="button" onClick={() => setSelectedEnergy(item.energy)} className={`flex w-full min-w-0 items-center justify-between gap-3 rounded-xl border-2 border-foreground px-4 py-4 text-left shadow-[3px_3px_0_var(--foreground)] transition-transform hover:-translate-y-0.5 ${selectedEnergy === item.energy ? "bg-primary" : item.accent}`}><span className="min-w-0"><span className="block text-xl font-black">{item.price} <span className="text-sm">TRX</span></span><span className="mt-1 block truncate text-sm font-black text-destructive">{item.energy} Energy（能量）</span><span className="mt-1 block truncate text-xs text-muted-foreground">{item.label}</span></span><span className={`grid size-6 shrink-0 place-items-center rounded-full border-2 border-foreground ${selectedEnergy === item.energy ? "bg-foreground text-background" : "bg-background"}`}>{selectedEnergy === item.energy && <Check size={14} strokeWidth={3} />}</span></button>)}</div>
-            <div className="mt-5 rounded-xl border-2 border-foreground bg-background p-4"><p className="text-xs font-bold text-muted-foreground">本次应转入</p><p className="mt-1 text-3xl font-black">{selected.price} TRX</p><p className="mt-1 text-xs leading-5 text-muted-foreground">转入下方固定收款地址，到账后即可使用能量。</p></div>
-            <Button type="button" onClick={() => scrollTo("payment")} className="mt-5 w-full gap-2 rounded-xl border-2 border-foreground bg-foreground font-black text-background shadow-[3px_3px_0_var(--primary)]">查看收款地址 <ArrowRight size={16} /></Button>
+          <aside className="min-w-0 rounded-[1.5rem] border-2 border-foreground bg-card p-5 shadow-[8px_8px_0_var(--foreground)] sm:p-7">
+            <div className="flex items-start justify-between gap-4 border-b-2 border-foreground pb-5">
+              <div>
+                <p className="text-xs font-black uppercase tracking-[0.2em] text-destructive">ORDER CARD / 01</p>
+                <h2 className="mt-2 text-2xl font-black tracking-tight sm:text-3xl">选择 Energy 套餐</h2>
+              </div>
+              <span className="grid size-11 shrink-0 place-items-center rounded-full border-2 border-foreground bg-primary"><Zap size={20} fill="currentColor" /></span>
+            </div>
+
+            <div className="mt-6 grid gap-3 sm:grid-cols-2">
+              {packages.map((item) => {
+                const isSelected = item.energy === selected.energy;
+                return (
+                  <Button
+                    key={item.energy}
+                    type="button"
+                    variant="ghost"
+                    onClick={() => setSelectedEnergy(item.energy)}
+                    className={`group h-auto min-w-0 items-stretch justify-start rounded-xl border-2 border-foreground p-0 text-left shadow-[3px_3px_0_var(--foreground)] transition-transform duration-200 ease-out hover:-translate-y-0.5 hover:bg-inherit ${item.tone === "blush" ? "bg-destructive/10" : "bg-background"} ${isSelected ? "ring-4 ring-primary ring-offset-2 ring-offset-card" : "opacity-75 hover:opacity-100"}`}
+                  >
+                    <span className="flex min-w-0 flex-1 flex-col gap-3 p-4 sm:p-5">
+                      <span className="flex items-baseline justify-between gap-2">
+                        <span className="text-4xl font-black tracking-[-0.06em]">{item.price}</span>
+                        <span className="text-base font-black text-destructive">TRX</span>
+                      </span>
+                      <span className="text-lg font-black leading-tight text-destructive">{item.energy} Energy</span>
+                      <span className="text-sm font-bold leading-6 text-muted-foreground">{item.label}</span>
+                      <span className="border-t border-foreground/20 pt-3 text-xs font-medium leading-5 text-muted-foreground">{item.note}</span>
+                    </span>
+                    <span className={`flex w-9 shrink-0 items-start justify-center pt-4 ${isSelected ? "text-foreground" : "text-transparent"}`}><Check size={18} strokeWidth={3} /></span>
+                  </Button>
+                );
+              })}
+            </div>
+
+            <div className="mt-7 rounded-xl border-2 border-foreground bg-foreground p-5 text-primary-foreground sm:p-6">
+              <div className="flex items-center justify-between gap-4">
+                <div>
+                  <p className="text-xs font-black uppercase tracking-[0.16em] text-primary">STEP 02 / 转入 TRX</p>
+                  <p className="mt-2 text-sm font-bold text-primary-foreground/70">向下方地址转入本次套餐金额</p>
+                </div>
+                <span className="text-3xl font-black tracking-[-0.06em] text-primary">{selected.price} TRX</span>
+              </div>
+              <div className="mt-5 flex min-w-0 items-center gap-3 rounded-lg border-2 border-primary/70 bg-foreground/80 p-3 sm:p-4">
+                <code className="min-w-0 flex-1 truncate font-mono text-sm font-bold tracking-tight text-primary-foreground sm:text-base">{config.receivingAddress}</code>
+                <Button type="button" size="sm" onClick={copyAddress} className="shrink-0 gap-2 rounded-lg border-2 border-foreground bg-primary font-black text-primary-foreground shadow-[2px_2px_0_var(--background)] hover:bg-primary/80">
+                  {copied ? <Check size={15} strokeWidth={3} /> : <Copy size={15} strokeWidth={2.5} />}
+                  <span className="hidden sm:inline">{copied ? "已复制" : "复制"}</span>
+                </Button>
+              </div>
+            </div>
+
+            <div className="mt-5 flex items-start gap-3 rounded-lg border-2 border-primary bg-primary/30 px-4 py-3 text-sm font-bold leading-6">
+              <Zap size={18} className="mt-1 shrink-0 text-destructive" fill="currentColor" />
+              <p>如果对方地址的 USDT 余额为 0，请选择 <span className="text-destructive">131,000 Energy</span>，避免能量不足导致转账失败。</p>
+            </div>
           </aside>
         </div>
       </section>
 
-      <section className="border-y-2 border-foreground bg-foreground text-background"><div className="mx-auto grid max-w-7xl gap-6 px-5 py-7 sm:grid-cols-3 sm:px-8 lg:px-10"><DarkFact icon={<Clock3 size={18} />} title="约 3 秒到账" text="转入对应 TRX 后，通常很快收到能量。" /><DarkFact icon={<ShieldCheck size={18} />} title="不连接钱包" text="无需授权，不索要私钥或助记词。" /><DarkFact icon={<MessageCircle size={18} />} title="有人协助" text="遇到地址或套餐问题可联系人工客服。" /></div></section>
+      <section id="steps" className="border-y-2 border-foreground bg-secondary">
+        <div className="mx-auto grid max-w-7xl gap-0 px-5 sm:px-8 lg:grid-cols-3 lg:px-10">
+          <div className="flex gap-4 border-b-2 border-foreground/15 py-8 lg:border-b-0 lg:border-r-2 lg:pr-8"><StepNumber>1</StepNumber><div><p className="text-xs font-black uppercase tracking-[0.18em] text-destructive">Choose</p><h3 className="mt-2 text-lg font-black">选择能量套餐</h3><p className="mt-2 text-sm leading-6 text-muted-foreground">有 USDT 选 65,000；没有 USDT 选 131,000。</p></div></div>
+          <div className="flex gap-4 border-b-2 border-foreground/15 py-8 lg:border-b-0 lg:border-r-2 lg:px-8"><StepNumber>2</StepNumber><div><p className="text-xs font-black uppercase tracking-[0.18em] text-destructive">Transfer</p><h3 className="mt-2 text-lg font-black">转入对应 TRX</h3><p className="mt-2 text-sm leading-6 text-muted-foreground">复制页面收款地址，转入准确的套餐金额。</p></div></div>
+          <div className="flex gap-4 py-8 lg:pl-8"><StepNumber>3</StepNumber><div><p className="text-xs font-black uppercase tracking-[0.18em] text-destructive">Finish</p><h3 className="mt-2 text-lg font-black">到账后完成 USDT</h3><p className="mt-2 text-sm leading-6 text-muted-foreground">约 3 秒收到能量，1 小时内完成转账。</p></div></div>
+        </div>
+      </section>
 
-      <section id="payment" className="mx-auto max-w-7xl px-5 py-20 sm:px-8 lg:px-10"><div className="grid gap-10 lg:grid-cols-[0.72fr_1.28fr] lg:items-center"><div><p className="text-sm font-black text-destructive">TRON ENERGY DESK / 02</p><h2 className="mt-3 text-4xl font-black tracking-[-0.06em]">2. 转入 TRX，等待能量到账</h2><p className="mt-4 max-w-md text-sm leading-7 text-muted-foreground">确认套餐后，向右侧收款地址转入 <span className="font-black text-destructive">{selected.price} TRX</span>。不用质押、不用连接钱包，到账后即可转 USDT。</p><div className="mt-8 space-y-3"><CheckLine text="收款地址固定，不需要填写你的地址" /><CheckLine text="通常约 3 秒到账" /><CheckLine text="到账后 1 小时内发送 USDT" /></div></div><div className="min-w-0 rounded-2xl border-2 border-foreground bg-foreground p-5 text-background shadow-[6px_6px_0_var(--primary)] sm:p-7"><div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between"><div className="min-w-0"><p className="text-xs font-bold text-primary">能量租赁收款地址（TRON）</p><p className="mt-3 break-all font-mono text-xl font-black tracking-tight sm:text-2xl">{config.receivingAddress}</p></div><Button type="button" onClick={copyAddress} className="h-12 shrink-0 gap-2 rounded-xl border-2 border-foreground bg-primary font-black text-primary-foreground shadow-[3px_3px_0_var(--background)]">{copied ? <Check size={17} /> : <Copy size={17} />}{copied ? "已复制" : "一键复制"}</Button></div><div className="mt-6 flex flex-wrap gap-2"><span className="rounded-lg bg-primary/20 px-3 py-2 text-xs font-bold text-primary">⚡ 约 3 秒到账</span><span className="rounded-lg bg-primary/20 px-3 py-2 text-xs font-bold text-primary">◷ 1 小时有效</span><span className="rounded-lg bg-primary/20 px-3 py-2 text-xs font-bold text-primary">→ 到账后转 USDT</span></div></div></div></section>
+      <section className="mx-auto grid max-w-7xl gap-10 px-5 py-16 sm:px-8 lg:grid-cols-[0.7fr_1.3fr] lg:px-10 lg:py-24">
+        <div>
+          <SectionLabel>使用说明 / FAQ</SectionLabel>
+          <h2 className="mt-5 max-w-sm text-4xl font-black leading-[0.98] tracking-[-0.06em] sm:text-5xl">先看清楚，<br /><span className="text-destructive">再开始转。</span></h2>
+          <p className="mt-5 max-w-sm text-sm leading-7 text-muted-foreground">我们只提供能量租赁入口，不托管资产，也不会向你索要私钥或助记词。</p>
+          <Button type="button" onClick={() => window.open(config.telegramUrl, "_blank", "noopener,noreferrer")} className="mt-7 gap-2 rounded-lg border-2 border-foreground bg-primary font-black text-primary-foreground shadow-[4px_4px_0_var(--foreground)] hover:bg-primary/80"><MessageCircle size={17} />需要帮助？联系 Telegram</Button>
+        </div>
+        <div id="faq" className="min-w-0 divide-y-2 divide-foreground/15 border-y-2 border-foreground">
+          {faqs.map(([question, answer], index) => (
+            <details key={question} className="group py-5">
+              <summary className="flex cursor-pointer list-none items-center gap-4 text-base font-black sm:text-lg [&::-webkit-details-marker]:hidden">
+                <span className="font-mono text-sm text-destructive">0{index + 1}</span>
+                <span className="min-w-0 flex-1">{question}</span>
+                <ChevronDown size={20} className="shrink-0 transition-transform duration-200 ease-out group-open:rotate-180" />
+              </summary>
+              <p className="max-w-2xl pb-1 pl-10 pt-4 text-sm leading-7 text-muted-foreground">{answer}</p>
+            </details>
+          ))}
+        </div>
+      </section>
 
-      <section className="mx-auto max-w-7xl px-5 pb-20 sm:px-8 lg:px-10"><div className="rounded-2xl border-2 border-primary bg-primary/20 px-5 py-5 shadow-[4px_4px_0_var(--primary)] sm:px-7"><p className="text-sm leading-7 text-foreground"><strong>重要提示：</strong>如果对方地址的 USDT 余额为 0，转账通常需要约两倍 Energy，请选择 <strong>131,000 Energy / 4 TRX</strong> 套餐。</p></div></section>
-
-      <section id="faq" className="border-t-2 border-foreground bg-secondary"><div className="mx-auto max-w-7xl px-5 py-20 sm:px-8 lg:px-10"><div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-end"><div><p className="text-sm font-black text-destructive">TRON ENERGY DESK / 03</p><h2 className="mt-2 text-4xl font-black tracking-[-0.06em]">常见问题</h2></div><p className="max-w-sm text-sm leading-6 text-muted-foreground">第一次购买也可以照着步骤完成，遇到问题直接联系客服。</p></div><div className="mt-10 grid gap-3 lg:grid-cols-3">{faqs.map(([question, answer]) => <details key={question} className="group rounded-xl border-2 border-foreground bg-card px-5 shadow-[3px_3px_0_var(--foreground)]"><summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-5 text-sm font-black [&::-webkit-details-marker]:hidden"><span>{question}</span><ChevronDown size={17} className="shrink-0 transition-transform group-open:rotate-180" /></summary><p className="pb-5 text-sm leading-7 text-muted-foreground">{answer}</p></details>)}</div></div></section>
-
-      <footer className="border-t-2 border-foreground bg-background"><div className="mx-auto flex max-w-7xl flex-col gap-5 px-5 py-8 sm:flex-row sm:items-center sm:justify-between sm:px-8 lg:px-10"><div><p className="font-black">波场能量购买与租赁</p><p className="mt-1 text-xs text-muted-foreground">客服链接与收款地址由 Telegram 机器人维护 · 7×12 小时服务</p></div><Button type="button" onClick={() => window.open(config.telegramUrl, "_blank", "noopener,noreferrer")} className="gap-2 rounded-lg border-2 border-foreground bg-primary font-black text-primary-foreground shadow-[3px_3px_0_var(--foreground)]"><ExternalLink size={15} /> Telegram 客服</Button></div></footer>
+      <footer className="border-t-2 border-foreground bg-foreground text-background">
+        <div className="mx-auto flex max-w-7xl flex-col gap-6 px-5 py-8 sm:px-8 lg:flex-row lg:items-center lg:justify-between lg:px-10">
+          <div><p className="text-lg font-black text-primary">波场能量柜台</p><p className="mt-2 text-sm text-background/65">人工确认服务 · 不托管资产 · 不索要私钥</p></div>
+          <div className="flex flex-wrap items-center gap-4 text-sm font-bold text-background/75"><button type="button" onClick={() => window.open(config.telegramUrl, "_blank", "noopener,noreferrer")} className="inline-flex items-center gap-2 hover:text-primary">Telegram <ExternalLink size={14} /></button><button type="button" onClick={() => scrollTo("faq")} className="hover:text-primary">服务说明</button><button type="button" onClick={() => scrollTo("top")} className="inline-flex items-center gap-2 hover:text-primary">返回顶部 <ArrowRight size={14} /></button></div>
+        </div>
+      </footer>
     </main>
   );
 }
-
-function CheckLine({ text }: { text: string }) { return <div className="flex items-center gap-3 text-sm text-muted-foreground"><span className="grid size-5 place-items-center rounded-full bg-primary text-primary-foreground"><Check size={12} strokeWidth={3} /></span>{text}</div>; }
-function DarkFact({ icon, title, text }: { icon: ReactNode; title: string; text: string }) { return <div className="flex gap-3"><span className="grid size-10 place-items-center rounded-lg border-2 border-background bg-primary text-primary-foreground">{icon}</span><div><p className="text-sm font-black">{title}</p><p className="mt-1 text-xs leading-5 text-background/65">{text}</p></div></div>; }
