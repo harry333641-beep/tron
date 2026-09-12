@@ -1,36 +1,36 @@
 ---
 name: "波场能量购买与租赁"
-description: "面向中文用户的波场 Energy 套餐购买与 TRX 转入式能量租赁入口，用一张清晰的业务单据完成选择、付款和到账后的转账。"
+description: "面向中文用户的波场 Energy 套餐购买与 TRX 转入式能量租赁入口，用深色交易终端完成选择、付款和到账后的转账。"
 colors:
-  background: "oklch(0.985 0.014 92)"
-  foreground: "oklch(0.16 0.012 45)"
-  card: "oklch(0.995 0.01 92)"
-  card-foreground: "oklch(0.16 0.012 45)"
-  popover: "oklch(0.995 0.01 92)"
-  popover-foreground: "oklch(0.16 0.012 45)"
-  primary: "oklch(0.84 0.17 92)"
-  primary-foreground: "oklch(0.16 0.012 45)"
-  secondary: "oklch(0.94 0.025 88)"
-  secondary-foreground: "oklch(0.2 0.015 45)"
-  muted: "oklch(0.94 0.025 88)"
-  muted-foreground: "oklch(0.46 0.025 45)"
-  accent: "oklch(0.92 0.08 88)"
-  accent-foreground: "oklch(0.16 0.012 45)"
-  destructive: "oklch(0.56 0.2 28)"
-  border: "oklch(0.16 0.012 45)"
-  input: "oklch(0.76 0.025 88)"
-  ring: "oklch(0.56 0.2 28)"
-  sidebar-ring: "oklch(0.56 0.2 28)"
-  sidebar-border: "oklch(0.16 0.012 45)"
-  sidebar-accent: "oklch(0.92 0.08 88)"
-  sidebar-primary-foreground: "oklch(0.16 0.012 45)"
-  sidebar-primary: "oklch(0.84 0.17 92)"
-  sidebar-foreground: "oklch(0.16 0.012 45)"
+  background: "oklch(0.12 0.025 255)"
+  foreground: "oklch(0.96 0.015 255)"
+  card: "oklch(0.16 0.032 252)"
+  card-foreground: "oklch(0.96 0.015 255)"
+  popover: "oklch(0.17 0.035 252)"
+  popover-foreground: "oklch(0.96 0.015 255)"
+  primary: "oklch(0.68 0.2 262)"
+  primary-foreground: "oklch(0.99 0.005 255)"
+  secondary: "oklch(0.19 0.035 250)"
+  secondary-foreground: "oklch(0.9 0.02 255)"
+  muted: "oklch(0.18 0.03 252)"
+  muted-foreground: "oklch(0.64 0.035 255)"
+  accent: "oklch(0.76 0.16 195)"
+  accent-foreground: "oklch(0.11 0.02 250)"
+  destructive: "oklch(0.64 0.22 24)"
+  border: "oklch(0.3 0.045 252)"
+  input: "oklch(0.23 0.04 252)"
+  ring: "oklch(0.68 0.2 262)"
+  sidebar-ring: "oklch(0.68 0.2 262)"
+  sidebar-border: "oklch(0.3 0.045 252)"
+  sidebar-accent: "oklch(0.2 0.04 252)"
+  sidebar-primary-foreground: "oklch(0.99 0.005 255)"
+  sidebar-primary: "oklch(0.68 0.2 262)"
+  sidebar-foreground: "oklch(0.96 0.015 255)"
 typography:
   display:
-    fontFamily: "heavy system sans with compact tracking and oversized editorial breaks."
+    fontFamily: "heavy system sans with tight tracking and compact line breaks."
   body:
-    fontFamily: "system sans with generous line-height."
+    fontFamily: "system sans with quiet, high-contrast labels."
   mono:
     fontFamily: "ui-monospace, SFMono-Regular, \"SF Mono\", Menlo, Consolas, monospace"
 rounded:
@@ -47,36 +47,37 @@ rounded:
 
 ## Overview
 
-米白收据纸上的能量柜台：页面像一张可操作的业务单据，选择卡、深色收款地址模块和红色业务重点组成清晰的购买路径。
+深夜交易终端：深海蓝黑网格背景、半透明深色面板、蓝紫主操作、青色状态提示和红色 TRX 对比色。页面围绕一个兑换卡片组织，不使用米白纸张或粗黑偏移阴影。
 
 ## Colors
 
 | Token | Value |
-| background | warm paper cream |
-| surface | soft cream cards |
-| text / muted | near-black / warm gray |
-| border | near-black heavy outline |
-| primary | signal yellow |
-| accent | service red |
-| success / warning / danger | mint confirmation / yellow warning / red emphasis |
+| background | deep navy black |
+| surface | translucent midnight blue |
+| text / muted | cool white / blue gray |
+| border | low-contrast blue gray |
+| primary | electric indigo blue |
+| accent | cyan aqua |
+| destructive | signal red for TRX and warnings |
+| success / warning | cyan confirmation / red caution |
 
 Declared in `globals.css` as `--color-*` and mirrored in the frontmatter. Use the token, never a raw hex.
 
 ## Typography
 
-- Headings: heavy system sans with compact tracking and oversized editorial breaks.
-- Body: system sans with generous line-height.
+- Headings: heavy system sans with tight tracking and compact line breaks.
+- Body: system sans with quiet, high-contrast labels.
 - Data labels: compact monospace for wallet addresses and transaction values.
 
-- Display: `heavy system sans with compact tracking and oversized editorial breaks.`
-- Body: `system sans with generous line-height.`
+- Display: `heavy system sans with tight tracking and compact line breaks.`
+- Body: `system sans with quiet, high-contrast labels.`
 - Mono: `ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace`
 
 ## Layout
 
-- Radius / shadow / spacing rhythm: 12–24px rounded cards, 2px dark outlines, hard offset shadows for key controls.
-- Shared components: Button, native disclosure FAQ, bordered package cards, copy-address panel, numbered steps.
-- Responsive rule: the desktop view uses a two-column purchase moment; mobile stacks the action path in order.
+- Radius / shadow / spacing rhythm: 10–18px rounded panels, thin blue borders, soft indigo glow around active controls.
+- Shared components: Button, native disclosure FAQ, dark exchange card, package selector, copy-address row, status pills.
+- Responsive rule: the main exchange card stays narrow and centered; supporting steps and FAQ stack below it on mobile.
 
 ## Shapes
 
@@ -84,7 +85,7 @@ Radii: `sm` calc(var(--radius) * 0.6), `md` calc(var(--radius) * 0.8), `lg` 0.75
 
 ## Do's and Don'ts
 
-- Voice: 中文、步骤化、直接说明动作；不要求用户提供地址，不索要私钥，明确到账与有效期。
+- Voice: 中文、短句、像交易工具一样直接；不要求用户提供地址，不索要私钥，明确到账与有效期。
 
 - Do load faces through Fontsource, not `next/font/google`.
 - Don't introduce a colour or radius that isn't a token above.
