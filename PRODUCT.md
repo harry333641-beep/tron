@@ -1,25 +1,32 @@
 <!-- Generated from .project/PROJECT.md by the engine — do not run `impeccable init`, which would interview a user who isn't here. Edit .project/PROJECT.md; this file is regenerated from it. -->
-# workspace
+# 能量快租
 
 **Platform:** Responsive web — Next.js, React, Tailwind. shadcn/ui and lucide are installed and available; the direction decides whether they fit or whether this surface needs its own vocabulary.
-**Task mode:** Experience (pass as `--mode experience` to any script)
+**Task mode:** Operate (pass as `--mode operate` to any script)
 
 ## What this is
 
-Build a Chinese-language TRX energy rental (TRON能量租赁) showcase website for a beginner seller starting with manual order fulfillment. Pages/sections: 首页 hero explaining what TRX energy rental is and why it saves TRON fees (对比直接质押/燃烧TRX); 租赁价格表 (per-day energy packages, e.g. 32,000 / 65,000 / 131,000 energy tiers with daily prices in TRX, editable); 如何下单 section with step-by-step instructions (1. 联系客服/Telegram 2. 提供接收能量的钱包地址 3. 支付TRX 4. 1-2分钟内收到能量); 常见问题 FAQ (什么是能量, 为什么租赁比直接烧TRX便宜, 能量多久到账, 如何续租); 关于我们/信誉说明 (承诺1-2分钟到账, 7x12小时服务, Telegram客服按钮突出显示); 简单的下单表单 (钱包地址 + 所需能量档位 + 联系方式, 提交后提示去Telegram付款确认). Style: crypto/fintech look, dark theme with TRON red (#E50914-ish) or red/black accent, clean, trustworthy, mobile-responsive, Chinese copy.
+面向中文用户的 TRON 能量按需租赁展示与人工下单入口。
+
+## What it enables
+
+让第一次接触 TRON 能量租赁的用户快速理解省费逻辑、选择套餐，并通过 Telegram 完成人工确认与付款。
+
+## Primary user
+
+需要进行 TRC-20 转账、希望降低 TRX 网络费用的个人用户和小型商家。
+
+## What exists today
+
+中文单页展示站，包含 TRON 能量租赁的费用说明与直接燃烧 TRX 的对比逻辑。 - 32,000 / 65,000 / 131,000 能量套餐与 1 天参考价格展示，可在页面数据中调整。 - 四步人工下单流程、钱包地址与联系方式表单、提交后的 Telegram 确认引导。 - FAQ、1–2 分钟到账说明、7×12 小时服务说明与多处 Telegram 客服入口。 - 深色红黑金融终端风格，适配手机与桌面宽度。
 
 ## Brand commitments & durable constraints
 
-- **The user is present and IS choosing the visual direction.** Offer six materially different grounded directions through the design-picker command and STOP; the answer arrives as your next input and the chosen direction is then pinned, exactly as if the user had named it. Do not build a direction before asking, do not narrow the six to a favourite, and do not ask about anything else in the same breath — this one decision is the whole card.
-- **Ask ONLY when the direction is genuinely open**: this project has no committed visual world yet, or the user asked to redesign the whole app. A later change inside a committed world inherits it — asking again there is an interruption, not a courtesy.
-- **The roll decides which six you show, never which one wins.** Order your grounded directions by resonance, then use the assignment to pick the spread you present, so the lineup is not your own top six. Showing your favourites is the failure this whole mechanism exists to prevent.
-- **All six options ARE dealt challengers — every one, and nothing else.** Do not put your own grounded directions on the card, do not invent a seventh world, and do not reword a challenger into something safer. Your derivation still matters: it is how you FUSE the world the user picks with this product. It just does not get to decide the menu.
-- **Deal THREE rolls, then show the six that can carry this product.** Run the concept-seed command three times and pool every challenger it deals (about eighteen worlds). Drop the ones that cannot hold this product's actual task — a world whose grammar has nowhere to put the main thing the user does here is out, however beautiful its board. Keep the six strongest of what survives.
-- **Fitness is the filter, never taste.** "Can this world's own grammar carry capture, or a list, or a form, or whatever this product mainly does?" is the question. "Would I have picked this?" is not, and a lineup of the six calmest worlds is the ranking rut wearing fitness as a disguise. A striking world that genuinely fuses beats a tame one every time.
-- **The six must span at least THREE different material families.** Paper, ink and stationery are ONE family. If your surviving six are all screens, or all paper, you filtered by familiarity rather than by fit — go back to the pool.
-- **Every option carries that challenger's QUALITY BAR *board* URL as `preview_image`, verbatim.** An option without one is dropped by the command, because the board is the only proof the world came from the roll. Six worlds, six boards. If the roll dealt fewer than six, show what it dealt.
-- **Never generate images for the card.** The catalog already ships the artwork, and rendering sketches would make the user sit and wait to answer a question about which world — not which composition.
-- **Also give every option a `swatch`** of the real colours you would build that world in, plus ONE plain sentence saying what this world does for THIS product — "a control-room rhythm for capturing thoughts fast" tells them something; listing the ground colour twice does not. The card already labels the board as a reference, so never spend the sentence saying that: "reference world, not a mockup" inside the description is wasted words on every card.
+当前是人工履约展示站，不伪造自动付款、自动到账或链上结果。 - 价格为可编辑参考价，付款前必须由客服再次确认。 - 不索要私钥或助记词，不托管用户资产。 - 保持中文、直接、可信的业务语气与红黑视觉系统。
+
+- **This project already HAS a committed visual world — do NOT offer a design picker.** `.project/DESIGN_SYSTEM.md` records a direction someone decided on, and the code, tokens and components are built around it. Read it, inherit it, and make the requested change inside it. Dealing six alternative worlds here offers to throw away a working design system nobody asked you to replace.
+- **Tailoring is not redesigning.** "Make it about my business", new copy, a different logo, swapped imagery, a brand colour — all of that lands INSIDE the committed world. Change what was asked for and leave the direction alone.
+- **The one exception is an explicit, whole-app redesign** — the user asking for a different look outright, not merely a change that happens to be large. Then the direction is open again and the picker applies. When they name the new direction themselves, that is the decision: pin it and build, still without a picker.
 - The user's own words always outrank the roll. A direction, palette, face or reference they named is pinned; the roll only decides what they left open.
 - Two review rounds is the budget, then ship and report open items honestly under the reviewer's own verdict — never announce a table with open findings as a pass.
 - Web fonts load through Fontsource, never `next/font/google` — this sandbox has no Google egress, so the fetch hangs at compile and the preview renders blank.
@@ -28,11 +35,15 @@ Build a Chinese-language TRX energy rental (TRON能量租赁) showcase website f
 
 ## Positioning
 
-Build a Chinese-language TRX energy rental (TRON能量租赁) showcase website for a beginner seller starting with manual order fulfillment. Pages/sections: 首页 hero explaining what TRX energy rental is and why it saves TRON fees (对比直接质押/燃烧TRX); 租赁价格表 (per-day energy packages, e.g. 32,000 / 65,000 / 131,000 energy tiers with daily prices in TRX, editable); 如何下单 section with step-by-step instructions (1. 联系客服/Telegram 2. 提供接收能量的钱包地址 3. 支付TRX 4. 1-2分钟内收到能量); 常见问题 FAQ (什么是能量, 为什么租赁比直接烧TRX便宜, 能量多久到账, 如何续租); 关于我们/信誉说明 (承诺1-2分钟到账, 7x12小时服务, Telegram客服按钮突出显示); 简单的下单表单 (钱包地址 + 所需能量档位 + 联系方式, 提交后提示去Telegram付款确认). Style: crypto/fintech look, dark theme with TRON red (#E50914-ish) or red/black accent, clean, trustworthy, mobile-responsive, Chinese copy.
+面向中文用户的 TRON 能量按需租赁展示与人工下单入口。
 
 ## Operating Context
 
-Responsive web, built unattended in one pass. Task mode: Experience.
+Responsive web, built unattended in one pass. Task mode: Operate.
+
+## Evidence on Hand
+
+中文单页展示站，包含 TRON 能量租赁的费用说明与直接燃烧 TRX 的对比逻辑。 - 32,000 / 65,000 / 131,000 能量套餐与 1 天参考价格展示，可在页面数据中调整。 - 四步人工下单流程、钱包地址与联系方式表单、提交后的 Telegram 确认引导。 - FAQ、1–2 分钟到账说明、7×12 小时服务说明与多处 Telegram 客服入口。 - 深色红黑金融终端风格，适配手机与桌面宽度。
 
 ## Product Principles
 

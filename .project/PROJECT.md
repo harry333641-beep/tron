@@ -1,22 +1,27 @@
-<!-- OWNER: Build (with the user) · READERS: every agent · READ THIS FIRST -->
-# {{PROJECT_NAME}}
+# 能量快租
 
-**One-liner:** {{what it is, in one sentence}}
+**One-liner:** 面向中文用户的 TRON 能量按需租赁展示与人工下单入口。
 
 ## Goal
-{{the outcome the user actually wants}}
+让第一次接触 TRON 能量租赁的用户快速理解省费逻辑、选择套餐，并通过 Telegram 完成人工确认与付款。
 
 ## Target users
-{{who it's for}}
+需要进行 TRC-20 转账、希望降低 TRX 网络费用的个人用户和小型商家。
 
 ## Status
-- Stage: {{idea | building | live}}
-- Live URL: {{url or —}}
-- Repo: {{repo or —}}
+- Stage: building
+- Live URL: —
+- Repo: —
 
 ## What exists today
-<!-- Kept current by the Build agent after each build -->
-{{high-level list of built features}}
+- 中文单页展示站，包含 TRON 能量租赁的费用说明与直接燃烧 TRX 的对比逻辑。
+- 32,000 / 65,000 / 131,000 能量套餐与 1 天参考价格展示，可在页面数据中调整。
+- 四步人工下单流程、钱包地址与联系方式表单、提交后的 Telegram 确认引导。
+- FAQ、1–2 分钟到账说明、7×12 小时服务说明与多处 Telegram 客服入口。
+- 深色红黑金融终端风格，适配手机与桌面宽度。
 
 ## Constraints / must-nots
-{{anything every agent must respect — brand rules, no-gos, tech limits}}
+- 当前是人工履约展示站，不伪造自动付款、自动到账或链上结果。
+- 价格为可编辑参考价，付款前必须由客服再次确认。
+- 不索要私钥或助记词，不托管用户资产。
+- 保持中文、直接、可信的业务语气与红黑视觉系统。
