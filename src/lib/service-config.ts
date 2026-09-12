@@ -16,30 +16,43 @@ export const DEFAULT_SERVICE_CONFIG: ServiceConfig = {
   receivingAddress: "TKq3aBWoYxziQ1gUHN2VcfzW3ej7u88888",
 };
 
+async function readServiceConfig(): Promise<ServiceConfig> {
+  try {
+    const [existing] = await db
+      .select({
+        id: serviceConfig.id,
+        telegramUrl: serviceConfig.telegramUrl,
+        receivingAddress: serviceConfig.receivingAddress,
+      })
+      .from(serviceConfig)
+      .where(eq(serviceConfig.id, DEFAULT_SERVICE_CONFIG.id))
+      .limit(1);
+
+    if (existing) return existing;
+
+    const [created] = await db
+      .insert(serviceConfig)
+      .values(DEFAULT_SERVICE_CONFIG)
+      .onConflictDoNothing()
+      .returning({
+        id: serviceConfig.id,
+        telegramUrl: serviceConfig.telegramUrl,
+        receivingAddress: serviceConfig.receivingAddress,
+      });
+
+    return created ?? DEFAULT_SERVICE_CONFIG;
+  } catch {
+    return DEFAULT_SERVICE_CONFIG;
+  }
+}
+
 export async function getServiceConfig(): Promise<ServiceConfig> {
-  const [existing] = await db
-    .select({
-      id: serviceConfig.id,
-      telegramUrl: serviceConfig.telegramUrl,
-      receivingAddress: serviceConfig.receivingAddress,
-    })
-    .from(serviceConfig)
-    .where(eq(serviceConfig.id, DEFAULT_SERVICE_CONFIG.id))
-    .limit(1);
-
-  if (existing) return existing;
-
-  const [created] = await db
-    .insert(serviceConfig)
-    .values(DEFAULT_SERVICE_CONFIG)
-    .onConflictDoNothing()
-    .returning({
-      id: serviceConfig.id,
-      telegramUrl: serviceConfig.telegramUrl,
-      receivingAddress: serviceConfig.receivingAddress,
-    });
-
-  return created ?? DEFAULT_SERVICE_CONFIG;
+  return Promise.race([
+    readServiceConfig(),
+    new Promise<ServiceConfig>((resolve) => {
+      setTimeout(() => resolve(DEFAULT_SERVICE_CONFIG), 1500);
+    }),
+  ]);
 }
 
 export async function updateServiceConfig(
