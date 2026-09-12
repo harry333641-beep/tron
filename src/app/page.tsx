@@ -105,7 +105,7 @@ export default function Home() {
           <div className="mt-12 grid max-w-xl grid-cols-3 border-y border-border/70 py-5"><div><p className="font-mono text-xl font-semibold text-foreground">1–2<span className="ml-1 text-xs font-normal text-muted-foreground">分钟</span></p><p className="mt-1 text-xs text-muted-foreground">常规处理时间</p></div><div className="border-l border-border/70 pl-4"><p className="font-mono text-xl font-semibold text-foreground">1<span className="ml-1 text-xs font-normal text-muted-foreground">小时</span></p><p className="mt-1 text-xs text-muted-foreground">能量有效期</p></div><div className="border-l border-border/70 pl-4"><p className="font-mono text-xl font-semibold text-foreground">7×12</p><p className="mt-1 text-xs text-muted-foreground">客服服务时段</p></div></div>
         </div>
 
-        <div className="relative min-w-0 lg:pt-2">
+        <div className="relative min-w-0 overflow-hidden lg:pt-2">
           <div className="absolute -inset-5 rounded-[2rem] border border-primary/10 bg-primary/5 blur-xl" />
           <div className="relative overflow-hidden rounded-2xl border border-border bg-card shadow-2xl shadow-black/25">
             <div className="flex items-center justify-between border-b border-border bg-secondary/45 px-5 py-4"><div><p className="font-mono text-[10px] uppercase tracking-[0.24em] text-primary">QUICK QUOTE</p><p className="mt-1 text-sm font-medium text-foreground">一分钟选好本次用量</p></div><span className="inline-flex items-center gap-1.5 rounded-full border border-primary/25 bg-primary/8 px-2.5 py-1 font-mono text-[10px] text-primary"><span className="size-1.5 rounded-full bg-primary" /> OPEN</span></div>
