@@ -4,6 +4,7 @@ import { useState, type ReactNode } from "react";
 import {
   ArrowUpRight,
   Check,
+  CheckCircle2,
   ChevronDown,
   CircleHelp,
   Clock3,
@@ -30,6 +31,13 @@ type EnergyTier = {
 const energyTiers: EnergyTier[] = [
   { price: "2", energy: "6.5K", label: "65,000 Energy" },
   { price: "4", energy: "131K", label: "131,000 Energy" },
+];
+
+const checkItems = [
+  ["确认从哪个地址发款", "Energy（能量）会发放到实际支付 TRX 的地址，因此请使用接下来要发送 USDT 的同一地址付款。"],
+  ["复制平台租赁地址", "从页面租赁区复制平台地址，核对无误后从准备发送 USDT 的同一地址转入对应 TRX。"],
+  ["到账后再发送 USDT", "付款后通常约 3 秒能量到账。输入付款地址查询可用能量；确认本次租赁到账时，还需核对该地址的链上能量委托记录。确认有足够能量后再发送 USDT TRC20。"],
+  ["到账后 1 小时内完成转账", "租到的能量自到账起有效 1 小时，请在有效期内完成转账。网络会自动使用地址中可用的能量，无需手动开启。"],
 ];
 
 const faqs = [
@@ -114,11 +122,9 @@ export function EnergyPurchase({ config }: { config: ServiceConfig }) {
 
       <section id="steps" className="relative z-10 border-y border-border bg-card/35">
         <div className="mx-auto max-w-5xl px-5 py-10 sm:px-8 sm:py-14">
-          <div className="flex items-end justify-between gap-4"><div><SectionEyebrow>HOW IT WORKS</SectionEyebrow><h2 className="mt-2 text-2xl font-black tracking-tight sm:text-3xl">三步完成能量租赁</h2></div><span className="hidden text-xs font-mono text-muted-foreground sm:block">NO WALLET CONNECTION</span></div>
-          <div className="mt-8 grid gap-3 md:grid-cols-3">
-            <div className="rounded-xl border border-border bg-card p-5"><span className="text-sm font-mono font-bold text-primary">01</span><h3 className="mt-4 font-black">选择 Energy 档位</h3><p className="mt-2 text-sm leading-6 text-muted-foreground">对方地址有 USDT 选 65,000；余额为 0 选 131,000。</p></div>
-            <div className="rounded-xl border border-border bg-card p-5"><span className="text-sm font-mono font-bold text-primary">02</span><h3 className="mt-4 font-black">转入套餐对应 TRX</h3><div className="mt-2 flex items-center gap-2 text-sm leading-6 text-muted-foreground"><span className="truncate font-mono text-foreground">{config.receivingAddress}</span><button type="button" onClick={copyAddress} className="shrink-0 text-primary hover:text-accent" aria-label="复制收款地址">{copied ? <Check size={15} /> : <Copy size={15} />}</button></div></div>
-            <div className="rounded-xl border border-border bg-card p-5"><span className="text-sm font-mono font-bold text-primary">03</span><h3 className="mt-4 font-black">到账后完成 USDT</h3><p className="mt-2 text-sm leading-6 text-muted-foreground">通常约 3 秒到账，到账后 1 小时内完成转账。</p></div>
+          <div className="max-w-2xl"><SectionEyebrow>BEFORE YOU SEND</SectionEyebrow><h2 className="mt-2 text-2xl font-black tracking-tight sm:text-3xl">转 USDT 前的 4 项检查</h2><p className="mt-3 text-sm leading-6 text-muted-foreground">按顺序确认付款地址、到账状态和有效时间，避免能量发放到错误地址。</p></div>
+          <div className="mt-8 grid gap-3 md:grid-cols-2">
+            {checkItems.map(([title, description], index) => <div key={title} className="rounded-xl border border-border bg-card p-5"><div className="flex items-start gap-4"><span className="grid size-9 shrink-0 place-items-center rounded-full border border-primary/40 bg-primary/10 font-mono text-sm font-bold text-primary">{index + 1}</span><div className="min-w-0"><div className="flex items-center gap-2"><CheckCircle2 size={16} className="shrink-0 text-accent" /><h3 className="font-black">{title}</h3></div><p className="mt-3 text-sm leading-7 text-muted-foreground">{description}</p></div></div></div>)}
           </div>
           <div className="mt-5 flex items-start gap-3 rounded-xl border border-destructive/30 bg-destructive/10 px-4 py-3 text-sm leading-6 text-destructive"><CircleHelp size={17} className="mt-1 shrink-0" /><p><span className="font-black">重要：</span>如果对方地址的 USDT 余额为 0，请优先选择 131,000 Energy，避免能量不足。</p></div>
         </div>
