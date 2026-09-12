@@ -88,6 +88,10 @@ export function EnergyPurchase({ config }: { config: ServiceConfig }) {
               <Button type="button" variant="ghost" size="icon" onClick={copyAddress} aria-label="复制收款地址" className="size-9 shrink-0 rounded-lg bg-muted/80 text-accent hover:bg-primary/15 hover:text-accent">{copied ? <Check size={18} strokeWidth={2.5} /> : <Copy size={18} />}</Button>
             </div>
             <div className="mt-4 flex items-center justify-center gap-2 rounded-lg border border-accent/20 bg-accent/5 px-3 py-2 text-center text-xs font-bold text-accent"><Zap size={15} fill="currentColor" />向此地址转账 2 TRX 即刻自动到账 6.5K 能量</div>
+            <div className="mt-3 grid grid-cols-2 gap-2">
+              <div className="min-w-0 rounded-lg border border-border bg-background/70 px-3 py-2.5 text-center"><span className="block text-xs font-black text-foreground">2 TRX</span><span className="mt-1 block truncate text-[11px] font-bold text-accent">65,000 Energy</span></div>
+              <div className="min-w-0 rounded-lg border border-border bg-background/70 px-3 py-2.5 text-center"><span className="block text-xs font-black text-foreground">4 TRX</span><span className="mt-1 block truncate text-[11px] font-bold text-accent">131,000 Energy</span></div>
+            </div>
             <div className="my-5 border-t border-border" />
             <Button type="button" onClick={() => window.open(config.telegramUrl, "_blank", "noopener,noreferrer")} className="h-12 w-full gap-2 rounded-xl bg-accent font-black text-accent-foreground shadow-[0_12px_28px_var(--primary-glow)] transition-transform duration-200 ease-out hover:-translate-y-0.5 hover:bg-accent/90"><ArrowUpRight size={19} strokeWidth={2.5} />前往TG机器人自助租赁</Button>
           </div>
