@@ -134,7 +134,7 @@ export function EnergyPurchase({ config }: { config: ServiceConfig }) {
       </section>
 
       <section id="faq" className="relative z-10 mx-auto max-w-2xl px-5 py-14 sm:px-8 sm:py-20">
-        <div className="text-center"><SectionEyebrow>FAQ / SAFETY</SectionEyebrow><h2 className="mt-3 text-3xl font-black tracking-tight sm:text-4xl">常见问题</h2><p className="mx-auto mt-4 max-w-sm text-sm leading-7 text-muted-foreground">透明展示服务边界：只提供能量租赁入口，不托管资产，不索要私钥。</p><Button type="button" onClick={() => window.open(config.telegramUrl, "_blank", "noopener,noreferrer")} variant="outline" className="mt-6 gap-2 rounded-lg border-border bg-card font-bold hover:border-primary hover:bg-primary/10"><MessageCircle size={16} />联系 Telegram 客服 <ArrowUpRight size={15} /></Button></div>
+        <div className="text-center"><SectionEyebrow>FAQ / SAFETY</SectionEyebrow><h2 className="mt-3 text-3xl font-black tracking-tight sm:text-4xl">常见问题</h2><p className="mx-auto mt-4 max-w-sm text-sm leading-7 text-muted-foreground">透明展示服务边界：只提供能量租赁入口，不托管资产，不索要私钥。</p></div>
         <div className="mt-10 min-w-0 divide-y divide-border overflow-hidden rounded-2xl border border-border bg-card/65">
           {faqs.map(([question, answer], index) => <details key={question} className="group px-5 py-4"><summary className="flex cursor-pointer list-none items-center gap-3 text-sm font-bold [&::-webkit-details-marker]:hidden"><span className="font-mono text-xs text-primary">0{index + 1}</span><span className="min-w-0 flex-1 text-center">{question}</span><ChevronDown size={17} className="shrink-0 text-muted-foreground transition-transform duration-200 ease-out group-open:rotate-180" /></summary><p className="pb-1 pt-3 text-center text-sm leading-6 text-muted-foreground">{answer}</p></details>)}
         </div>
@@ -143,6 +143,8 @@ export function EnergyPurchase({ config }: { config: ServiceConfig }) {
       <footer className="relative z-10 border-t border-border bg-card/60">
         <div className="mx-auto flex max-w-5xl flex-col gap-5 px-5 py-7 sm:px-8 md:flex-row md:items-center md:justify-between"><div><p className="text-sm font-black">波场能量柜台</p><p className="mt-1 text-xs text-muted-foreground">人工确认 · 非托管 · 仅服务 TRC-20 转账</p></div><div className="flex flex-wrap items-center gap-4 text-xs font-bold text-muted-foreground"><button type="button" onClick={() => window.open(config.telegramUrl, "_blank", "noopener,noreferrer")} className="inline-flex items-center gap-1.5 hover:text-primary">Telegram <ExternalLink size={13} /></button><button type="button" onClick={() => scrollTo("faq")} className="hover:text-primary">服务说明</button><button type="button" onClick={() => scrollTo("top")} className="hover:text-primary">返回顶部</button></div></div>
       </footer>
+
+      <Button type="button" size="icon" onClick={() => window.open(config.telegramUrl, "_blank", "noopener,noreferrer")} aria-label="联系 Telegram 客服" className="fixed bottom-5 right-5 z-50 size-12 rounded-full bg-accent text-accent-foreground shadow-[0_12px_28px_var(--primary-glow)] hover:bg-accent/90 sm:bottom-7 sm:right-7"><MessageCircle size={20} /></Button>
     </main>
   );
 }
