@@ -133,10 +133,10 @@ export function EnergyPurchase({ config }: { config: ServiceConfig }) {
         </div>
       </section>
 
-      <section id="faq" className="relative z-10 mx-auto grid max-w-5xl gap-10 px-5 py-14 sm:px-8 sm:py-20 lg:grid-cols-[0.8fr_1.2fr]">
-        <div><SectionEyebrow>FAQ / SAFETY</SectionEyebrow><h2 className="mt-3 text-3xl font-black tracking-tight sm:text-4xl">常见问题</h2><p className="mt-4 max-w-sm text-sm leading-7 text-muted-foreground">透明展示服务边界：只提供能量租赁入口，不托管资产，不索要私钥。</p><Button type="button" onClick={() => window.open(config.telegramUrl, "_blank", "noopener,noreferrer")} variant="outline" className="mt-6 gap-2 rounded-lg border-border bg-card font-bold hover:border-primary hover:bg-primary/10"><MessageCircle size={16} />联系 Telegram 客服 <ArrowUpRight size={15} /></Button></div>
-        <div className="min-w-0 divide-y divide-border overflow-hidden rounded-2xl border border-border bg-card/65">
-          {faqs.map(([question, answer], index) => <details key={question} className="group px-5 py-4"><summary className="flex cursor-pointer list-none items-center gap-3 text-sm font-bold [&::-webkit-details-marker]:hidden"><span className="font-mono text-xs text-primary">0{index + 1}</span><span className="min-w-0 flex-1">{question}</span><ChevronDown size={17} className="shrink-0 text-muted-foreground transition-transform duration-200 ease-out group-open:rotate-180" /></summary><p className="pb-1 pl-8 pt-3 text-sm leading-6 text-muted-foreground">{answer}</p></details>)}
+      <section id="faq" className="relative z-10 mx-auto max-w-2xl px-5 py-14 sm:px-8 sm:py-20">
+        <div className="text-center"><SectionEyebrow>FAQ / SAFETY</SectionEyebrow><h2 className="mt-3 text-3xl font-black tracking-tight sm:text-4xl">常见问题</h2><p className="mx-auto mt-4 max-w-sm text-sm leading-7 text-muted-foreground">透明展示服务边界：只提供能量租赁入口，不托管资产，不索要私钥。</p><Button type="button" onClick={() => window.open(config.telegramUrl, "_blank", "noopener,noreferrer")} variant="outline" className="mt-6 gap-2 rounded-lg border-border bg-card font-bold hover:border-primary hover:bg-primary/10"><MessageCircle size={16} />联系 Telegram 客服 <ArrowUpRight size={15} /></Button></div>
+        <div className="mt-10 min-w-0 divide-y divide-border overflow-hidden rounded-2xl border border-border bg-card/65">
+          {faqs.map(([question, answer], index) => <details key={question} className="group px-5 py-4"><summary className="flex cursor-pointer list-none items-center gap-3 text-sm font-bold [&::-webkit-details-marker]:hidden"><span className="font-mono text-xs text-primary">0{index + 1}</span><span className="min-w-0 flex-1 text-center">{question}</span><ChevronDown size={17} className="shrink-0 text-muted-foreground transition-transform duration-200 ease-out group-open:rotate-180" /></summary><p className="pb-1 pt-3 text-center text-sm leading-6 text-muted-foreground">{answer}</p></details>)}
         </div>
       </section>
 
