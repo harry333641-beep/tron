@@ -13,7 +13,7 @@ export type ServiceConfig = {
 export const DEFAULT_SERVICE_CONFIG: ServiceConfig = {
   id: "primary",
   telegramUrl: "https://t.me/trx_energy_service",
-  receivingAddress: "TKq3aBWoYxziQ1gUHN2VcfzW3ej7u88888",
+  receivingAddress: "THcETD8Xud85LQU5LJnqRz7smSty8ejSz4",
 };
 
 async function readServiceConfig(): Promise<ServiceConfig> {

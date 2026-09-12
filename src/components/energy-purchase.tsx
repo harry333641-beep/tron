@@ -2,7 +2,6 @@
 
 import { useState, type ReactNode } from "react";
 import {
-  ArrowDown,
   ArrowUpRight,
   Check,
   ChevronDown,
@@ -22,18 +21,6 @@ type ServiceConfig = {
   receivingAddress: string;
 };
 
-type PackageOption = {
-  energy: string;
-  price: string;
-  label: string;
-  note: string;
-};
-
-const packages: PackageOption[] = [
-  { energy: "65,000", price: "2", label: "对方地址已有 USDT", note: "普通转账推荐" },
-  { energy: "131,000", price: "4", label: "对方地址没有 USDT", note: "余额为 0 时推荐" },
-];
-
 const faqs = [
   ["连接钱包安全吗？", "本服务不要求连接钱包。你只需向页面展示的收款地址转入对应 TRX，不会索要私钥或助记词。"],
   ["什么时候发送 USDT？", "通常约 3 秒收到能量。确认能量到账后，请在 1 小时有效期内完成 USDT TRC-20 转账。"],
@@ -51,9 +38,7 @@ function SectionEyebrow({ children }: { children: ReactNode }) {
 }
 
 export function EnergyPurchase({ config }: { config: ServiceConfig }) {
-  const [selectedEnergy, setSelectedEnergy] = useState(packages[0].energy);
   const [copied, setCopied] = useState(false);
-  const selected = packages.find((item) => item.energy === selectedEnergy) ?? packages[0];
 
   async function copyAddress() {
     try {
@@ -96,36 +81,15 @@ export function EnergyPurchase({ config }: { config: ServiceConfig }) {
         </div>
 
         <div className="mx-auto mt-10 max-w-xl rounded-2xl border border-border bg-card/90 p-3 shadow-[0_24px_80px_var(--panel-shadow)] backdrop-blur sm:p-4">
-          <div className="flex rounded-xl border border-border bg-background/75 p-1">
-            <Button type="button" variant="ghost" className="h-10 flex-1 rounded-lg bg-muted/80 text-sm font-bold text-foreground shadow-sm hover:bg-muted">↔&nbsp; 兑换</Button>
-            <Button type="button" variant="ghost" onClick={() => scrollTo("steps")} className="h-10 flex-1 rounded-lg text-sm font-bold text-muted-foreground hover:bg-muted/60 hover:text-foreground"><Zap size={14} />&nbsp; 租赁能量</Button>
-          </div>
-
-          <div className="mt-5 px-2 sm:px-4">
-            <div className="flex items-center justify-between"><SectionEyebrow>你发送</SectionEyebrow><span className="text-[10px] font-bold text-muted-foreground">选择套餐金额</span></div>
-            <div className="mt-2 flex items-center gap-3 rounded-xl border border-border bg-background px-4 py-4 focus-within:border-primary/80 focus-within:ring-4 focus-within:ring-primary/10">
-              <span className="min-w-0 flex-1 text-2xl font-black tracking-tight">{selected.price}</span>
-              <span className="inline-flex items-center gap-2 rounded-lg border border-border bg-muted/80 px-3 py-2 text-xs font-black"><span className="grid size-5 place-items-center rounded-full bg-accent text-accent-foreground">₮</span> TRX</span>
+          <div className="px-2 py-4 sm:px-4">
+            <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground"><WalletCards size={14} />收款地址 <span className="text-foreground/80">(点击复制)</span></div>
+            <div className="mt-4 flex min-w-0 items-center gap-3 rounded-xl border border-border bg-background px-4 py-3">
+              <span className="min-w-0 flex-1 truncate text-center font-mono text-sm font-bold text-accent sm:text-base">{config.receivingAddress}</span>
+              <Button type="button" variant="ghost" size="icon" onClick={copyAddress} aria-label="复制收款地址" className="size-9 shrink-0 rounded-lg bg-muted/80 text-accent hover:bg-primary/15 hover:text-accent">{copied ? <Check size={18} strokeWidth={2.5} /> : <Copy size={18} />}</Button>
             </div>
-
-            <div className="relative z-10 mx-auto -my-2 grid size-9 place-items-center rounded-xl border border-primary/60 bg-card text-primary shadow-[0_0_20px_var(--primary-glow)]"><ArrowDown size={16} /></div>
-
-            <div className="flex items-center justify-between"><SectionEyebrow>你收到</SectionEyebrow><span className="text-[10px] font-bold text-muted-foreground">Energy 租赁额度</span></div>
-            <div className="mt-2 flex items-center gap-3 rounded-xl border border-border bg-background px-4 py-4"><span className="min-w-0 flex-1 text-2xl font-black tracking-tight">{selected.energy}</span><span className="inline-flex items-center gap-2 rounded-lg border border-border bg-muted/80 px-3 py-2 text-xs font-black"><Zap size={15} className="text-primary" fill="currentColor" /> Energy</span></div>
-
-            <div className="mt-4 flex items-center justify-between rounded-lg border border-border/80 bg-muted/35 px-4 py-3 text-xs"><span className="text-muted-foreground">当前方案</span><span className="font-mono font-bold text-foreground">{selected.energy} Energy ≈ {selected.price} TRX</span></div>
-
-            <Button type="button" onClick={() => scrollTo("steps")} className="mt-4 h-12 w-full rounded-xl bg-primary font-black text-primary-foreground shadow-[0_12px_28px_var(--primary-glow)] transition-transform duration-200 ease-out hover:-translate-y-0.5 hover:bg-primary/90">↓&nbsp; 查看转入地址</Button>
-          </div>
-
-          <div className="mt-5 border-t border-border px-2 pt-5 sm:px-4">
-            <div className="flex items-center justify-between gap-3"><SectionEyebrow>选择能量档位</SectionEyebrow><span className="text-[10px] font-bold text-muted-foreground">点击切换</span></div>
-            <div className="mt-3 grid gap-2 sm:grid-cols-2">
-              {packages.map((item) => {
-                const active = item.energy === selected.energy;
-                return <Button key={item.energy} type="button" variant="ghost" onClick={() => setSelectedEnergy(item.energy)} className={`h-auto min-w-0 justify-start rounded-xl border p-3 text-left transition-colors ${active ? "border-primary bg-primary/10 text-foreground shadow-[0_0_20px_var(--primary-glow)]" : "border-border bg-background text-muted-foreground hover:border-primary/50 hover:bg-primary/5"}`}><span className="min-w-0 flex-1"><span className="flex items-center gap-2 text-sm font-black"><span className={active ? "text-primary" : "text-foreground"}>{item.price} TRX</span><span className="truncate text-xs font-bold">· {item.energy} Energy</span></span><span className="mt-1 block truncate text-[11px]">{item.label} · {item.note}</span></span>{active && <Check size={16} className="shrink-0 text-primary" strokeWidth={2.5} />}</Button>;
-              })}
-            </div>
+            <div className="mt-4 flex items-center justify-center gap-2 rounded-lg border border-accent/20 bg-accent/5 px-3 py-2 text-center text-xs font-bold text-accent"><Zap size={15} fill="currentColor" />向此地址转账 2 TRX 即刻自动到账 6.5K 能量</div>
+            <div className="my-5 border-t border-border" />
+            <Button type="button" onClick={() => window.open(config.telegramUrl, "_blank", "noopener,noreferrer")} className="h-12 w-full gap-2 rounded-xl bg-accent font-black text-accent-foreground shadow-[0_12px_28px_var(--primary-glow)] transition-transform duration-200 ease-out hover:-translate-y-0.5 hover:bg-accent/90"><ArrowUpRight size={19} strokeWidth={2.5} />前往TG机器人自助租赁</Button>
           </div>
         </div>
       </section>
