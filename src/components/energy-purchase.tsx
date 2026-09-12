@@ -95,7 +95,7 @@ export function EnergyPurchase({ config }: { config: ServiceConfig }) {
       <section className="relative z-10 mx-auto max-w-5xl px-5 pb-10 pt-12 sm:px-8 sm:pt-16">
         <div className="mx-auto max-w-2xl text-center">
           <div className="flex items-center justify-center gap-2"><span className="size-1.5 rounded-full bg-accent shadow-[0_0_12px_var(--accent)]" /><SectionEyebrow>FAST · SIMPLE · NON-CUSTODIAL</SectionEyebrow><span className="size-1.5 rounded-full bg-accent shadow-[0_0_12px_var(--accent)]" /></div>
-          <h1 className="mt-5 text-4xl font-black leading-[1.08] tracking-[-0.06em] sm:text-6xl">兑换 <span className="text-accent">USDT</span> <span className="text-muted-foreground">↔</span> <span className="text-destructive">TRX</span><br /><span className="text-foreground">与能量租赁</span></h1>
+          <h1 className="mt-5 text-4xl font-black leading-[1.08] tracking-[-0.06em] sm:text-6xl"><span className="text-destructive">TRX</span><br /><span className="text-foreground">能量租赁平台</span></h1>
           <p className="mx-auto mt-5 max-w-xl text-sm leading-7 text-muted-foreground sm:text-base">即使你的钱包中没有足够 TRX，也可以先租用 Energy 完成 USDT 转账。无需连接钱包，不托管资产。</p>
           <div className="mt-6 flex flex-wrap justify-center gap-2"><StatusPill icon={<Clock3 size={14} className="text-accent" />}>约 3 秒到账</StatusPill><StatusPill icon={<ShieldCheck size={14} className="text-accent" />}>不连接钱包</StatusPill><StatusPill icon={<WalletCards size={14} className="text-accent" />}>人工确认</StatusPill></div>
         </div>
