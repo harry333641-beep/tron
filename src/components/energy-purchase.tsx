@@ -108,6 +108,11 @@ export function EnergyPurchase({ config }: { config: ServiceConfig }) {
               <Button type="button" variant="ghost" size="icon" onClick={copyAddress} aria-label="复制收款地址" className="size-9 shrink-0 rounded-lg bg-muted/80 text-accent hover:bg-primary/15 hover:text-accent">{copied ? <Check size={18} strokeWidth={2.5} /> : <Copy size={18} />}</Button>
             </div>
             <div className="mt-4 flex items-center justify-center gap-2 rounded-lg border border-accent/20 bg-accent/5 px-3 py-2 text-center text-xs font-bold text-accent"><Zap size={15} fill="currentColor" />向此地址转账 {selectedTier.price} TRX 即刻自动到账 {selectedTier.energy} 能量</div>
+            <div className="mt-4 space-y-2 rounded-xl border border-primary/20 bg-primary/5 px-4 py-3 text-center text-xs leading-6 text-muted-foreground">
+              <p>未支付情况下，每笔交易需燃烧约 <span className="font-black text-destructive">13.6 TRX</span> 获得 65,000 能量。租赁一笔能量即可免费转 USDT。</p>
+              <p>向平台收款地址支付租金，一小时内你的地址转账将不再扣 TRX 手续费。</p>
+              <p>若接收地址 USDT 余额为 0（未激活），需双倍能量（购买两笔）。</p>
+            </div>
             <div className="mt-3 grid grid-cols-2 gap-2">
               {energyTiers.map((tier) => {
                 const isSelected = tier.price === selectedTier.price;
