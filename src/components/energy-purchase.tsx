@@ -20,6 +20,8 @@ import { Button } from "@/components/ui/button";
 type ServiceConfig = {
   telegramUrl: string;
   receivingAddress: string;
+  price65k: string;
+  price131k: string;
 };
 
 type EnergyTier = {
@@ -28,10 +30,6 @@ type EnergyTier = {
   label: string;
 };
 
-const energyTiers: EnergyTier[] = [
-  { price: "2", energy: "6.5K", label: "65,000 Energy" },
-  { price: "4", energy: "131K", label: "131,000 Energy" },
-];
 
 const checkItems = [
   ["确认从哪个地址发款", "Energy（能量）会发放到实际支付 TRX 的地址，因此请使用接下来要发送 USDT 的同一地址付款。"],
@@ -57,6 +55,10 @@ function SectionEyebrow({ children }: { children: ReactNode }) {
 }
 
 export function EnergyPurchase({ config }: { config: ServiceConfig }) {
+  const energyTiers: EnergyTier[] = [
+    { price: config.price65k, energy: "6.5K", label: "65,000 Energy" },
+    { price: config.price131k, energy: "131K", label: "131,000 Energy" },
+  ];
   const [selectedTier, setSelectedTier] = useState(energyTiers[0]);
   const [copied, setCopied] = useState(false);
 

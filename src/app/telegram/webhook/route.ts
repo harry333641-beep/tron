@@ -41,10 +41,10 @@ export async function POST(request: Request) {
 
   try {
     if (text === "/start" || text === "/help") {
-      await reply(chatId, "可用指令：\n/set_address TRON收款地址\n/set_support https://t.me/客服用户名\n/config");
+      await reply(chatId, "可用指令：\n/set_address TRON收款地址\n/set_support https://t.me/客服用户名\n/set_price 65K价格 131K价格\n/set_price_65k 65K价格\n/set_price_131k 131K价格\n/config");
     } else if (text === "/config") {
       const config = await getServiceConfig();
-      await reply(chatId, `当前配置：\n客服：${config.telegramUrl}\n收款地址：${config.receivingAddress}`);
+      await reply(chatId, `当前配置：\n65,000 能量：${config.price65k} TRX\n131,000 能量：${config.price131k} TRX\n客服：${config.telegramUrl}\n收款地址：${config.receivingAddress}`);
     } else if (text.startsWith("/set_address ")) {
       const receivingAddress = text.slice("/set_address ".length).trim();
       const config = await updateServiceConfigFromTelegram({ receivingAddress });
@@ -53,6 +53,19 @@ export async function POST(request: Request) {
       const telegramUrl = text.slice("/set_support ".length).trim();
       const config = await updateServiceConfigFromTelegram({ telegramUrl });
       await reply(chatId, `客服链接已更新：\n${config.telegramUrl}`);
+    } else if (text.startsWith("/set_price ")) {
+      const [price65k, price131k] = text.slice("/set_price ".length).trim().split(/\s+/);
+      if (!price65k || !price131k) throw new Error("用法：/set_price 65K价格 131K价格");
+      const config = await updateServiceConfigFromTelegram({ price65k, price131k });
+      await reply(chatId, `套餐价格已更新：\n65,000 能量：${config.price65k} TRX\n131,000 能量：${config.price131k} TRX`);
+    } else if (text.startsWith("/set_price_65k ")) {
+      const price65k = text.slice("/set_price_65k ".length).trim();
+      const config = await updateServiceConfigFromTelegram({ price65k });
+      await reply(chatId, `65,000 能量价格已更新：${config.price65k} TRX`);
+    } else if (text.startsWith("/set_price_131k ")) {
+      const price131k = text.slice("/set_price_131k ".length).trim();
+      const config = await updateServiceConfigFromTelegram({ price131k });
+      await reply(chatId, `131,000 能量价格已更新：${config.price131k} TRX`);
     } else {
       await reply(chatId, "指令未识别，发送 /help 查看用法。");
     }

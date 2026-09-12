@@ -123,5 +123,7 @@ export const serviceConfig = pgTable("service_config", {
   id: text("id").primaryKey(),
   telegramUrl: text("telegram_url").notNull(),
   receivingAddress: text("receiving_address").notNull(),
+  price65k: text("price_65k").notNull().default("2"),
+  price131k: text("price_131k").notNull().default("4"),
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
 });

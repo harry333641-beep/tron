@@ -8,12 +8,16 @@ export type ServiceConfig = {
   id: string;
   telegramUrl: string;
   receivingAddress: string;
+  price65k: string;
+  price131k: string;
 };
 
 export const DEFAULT_SERVICE_CONFIG: ServiceConfig = {
   id: "primary",
   telegramUrl: "https://t.me/trx_energy_service",
   receivingAddress: "THcETD8Xud85LQU5LJnqRz7smSty8ejSz4",
+  price65k: "2",
+  price131k: "4",
 };
 
 async function readServiceConfig(): Promise<ServiceConfig> {
@@ -23,6 +27,8 @@ async function readServiceConfig(): Promise<ServiceConfig> {
         id: serviceConfig.id,
         telegramUrl: serviceConfig.telegramUrl,
         receivingAddress: serviceConfig.receivingAddress,
+        price65k: serviceConfig.price65k,
+        price131k: serviceConfig.price131k,
       })
       .from(serviceConfig)
       .where(eq(serviceConfig.id, DEFAULT_SERVICE_CONFIG.id))
@@ -38,6 +44,8 @@ async function readServiceConfig(): Promise<ServiceConfig> {
         id: serviceConfig.id,
         telegramUrl: serviceConfig.telegramUrl,
         receivingAddress: serviceConfig.receivingAddress,
+        price65k: serviceConfig.price65k,
+        price131k: serviceConfig.price131k,
       });
 
     return created ?? DEFAULT_SERVICE_CONFIG;
@@ -56,7 +64,7 @@ export async function getServiceConfig(): Promise<ServiceConfig> {
 }
 
 export async function updateServiceConfig(
-  updates: Partial<Pick<ServiceConfig, "telegramUrl" | "receivingAddress">>,
+  updates: Partial<Pick<ServiceConfig, "telegramUrl" | "receivingAddress" | "price65k" | "price131k">>,
 ) {
   const current = await getServiceConfig();
   const [updated] = await db
@@ -67,6 +75,8 @@ export async function updateServiceConfig(
       id: serviceConfig.id,
       telegramUrl: serviceConfig.telegramUrl,
       receivingAddress: serviceConfig.receivingAddress,
+      price65k: serviceConfig.price65k,
+      price131k: serviceConfig.price131k,
     });
 
   return updated ?? { ...current, ...updates };
