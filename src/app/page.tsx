@@ -24,24 +24,17 @@ const telegramUrl = "https://t.me/trx_energy_service";
 
 const packages = [
   {
-    energy: "32,000",
-    price: "2.2",
-    note: "适合日常转账",
-    tag: "入门",
-    featured: false,
-  },
-  {
     energy: "65,000",
-    price: "4.2",
-    note: "适合多笔 USDT",
-    tag: "最常用",
+    price: "2.2",
+    note: "标准 USDT 转账 · 1 小时有效",
+    tag: "标准",
     featured: true,
   },
   {
     energy: "131,000",
-    price: "7.8",
-    note: "适合高频地址",
-    tag: "大额更省",
+    price: "4.4",
+    note: "收款方无 U · 1 小时有效",
+    tag: "加倍能量",
     featured: false,
   },
 ];
@@ -50,7 +43,7 @@ const faqs = [
   {
     question: "什么是 TRON 能量？",
     answer:
-      "能量（Energy）是 TRON 网络执行智能合约时消耗的资源。发送 TRC-20 USDT 等交易时，钱包会优先消耗能量；能量不足才会燃烧 TRX 支付网络费用。",
+      "能量（Energy）是 TRON 网络执行智能合约时消耗的资源。一次 USDT 转账通常消耗 65,000 能量；如果收款方地址没有 USDT，所需能量会加倍到 131,000。",
   },
   {
     question: "为什么租能量比直接烧 TRX 便宜？",
@@ -65,14 +58,14 @@ const faqs = [
   {
     question: "可以续租或重复购买吗？",
     answer:
-      "可以。能量使用周期结束后，直接发起下一笔订单即可；如果你有固定地址和频率，也可以在 Telegram 里和客服约定长期方案。",
+      "可以。每笔能量有效 1 小时，使用或失效后直接发起下一笔订单即可；如果你有固定地址和频率，也可以在 Telegram 里和客服约定长期方案。",
   },
 ];
 
 export default function Home() {
   const [wallet, setWallet] = useState("");
   const [contact, setContact] = useState("");
-  const [selectedEnergy, setSelectedEnergy] = useState(packages[1].energy);
+  const [selectedEnergy, setSelectedEnergy] = useState(packages[0].energy);
   const [submitted, setSubmitted] = useState(false);
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -121,7 +114,7 @@ export default function Home() {
             不用质押，<span className="text-primary">按需租能量。</span>
           </h1>
           <p className="mt-7 max-w-xl text-base leading-8 text-muted-foreground sm:text-lg">
-            TRC-20 转账前，给钱包补上刚刚好的 TRON 能量。少烧 TRX、不锁资金，人工确认后通常 1–2 分钟到账。
+            一次 USDT 转账通常消耗 65,000 能量；如果收款方没有 USDT，需要准备 131,000 能量。少烧 TRX、不锁资金，人工确认后通常 1–2 分钟到账。
           </p>
           <div className="mt-9 flex flex-col gap-3 sm:flex-row">
             <Button type="button" size="lg" onClick={() => { window.location.hash = "order"; }} className="h-12 gap-2 rounded-lg px-5 text-sm font-semibold shadow-[0_0_30px_color-mix(in_oklab,var(--primary)_28%,transparent)]">
@@ -172,7 +165,7 @@ export default function Home() {
               </div>
               <div className="flex items-start gap-2 rounded-lg bg-secondary/70 p-3 text-xs leading-5 text-muted-foreground">
                 <Info size={14} className="mt-0.5 shrink-0 text-primary" />
-                价格按 1 天计算，最终以客服确认时的实时报价为准。
+                价格按每笔转账计算，能量 1 小时内有效，最终以客服确认时的实时报价为准。
               </div>
             </div>
           </div>
@@ -198,9 +191,9 @@ export default function Home() {
         <div className="flex flex-col justify-between gap-5 md:flex-row md:items-end">
           <div>
             <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-primary">01 / Pricing</p>
-            <h2 className="mt-3 text-3xl font-semibold tracking-[-0.04em] text-foreground sm:text-4xl">选一个刚好够用的档位</h2>
+            <h2 className="mt-3 text-3xl font-semibold tracking-[-0.04em] text-foreground sm:text-4xl">按一次转账选择能量</h2>
           </div>
-          <p className="max-w-sm text-sm leading-6 text-muted-foreground">以下为 1 天参考价。不同网络时段、地址需求可能略有浮动，联系客服即可确认。</p>
+          <p className="max-w-sm text-sm leading-6 text-muted-foreground">以下为每笔参考价。收款方地址状态不同，所需能量可能不同，联系客服即可确认。</p>
         </div>
         <div className="mt-10 grid gap-4 lg:grid-cols-3">
           {packages.map((item) => (
@@ -208,9 +201,9 @@ export default function Home() {
               {item.featured && <div className="absolute right-4 top-4 rounded-full bg-primary px-2.5 py-1 font-mono text-[9px] font-bold tracking-[0.16em] text-primary-foreground">POPULAR</div>}
               <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">{item.tag}</p>
               <p className="mt-7 font-mono text-4xl font-semibold tracking-[-0.06em] text-foreground">{item.energy}</p>
-              <p className="mt-1 text-sm text-muted-foreground">Energy / 天</p>
+              <p className="mt-1 text-sm text-muted-foreground">Energy / 笔 · 1 小时有效</p>
               <div className="my-7 h-px bg-border" />
-              <div className="flex items-end gap-2"><span className="font-mono text-3xl font-semibold text-primary">{item.price}</span><span className="mb-1 font-mono text-xs text-muted-foreground">TRX / DAY</span></div>
+              <div className="flex items-end gap-2"><span className="font-mono text-3xl font-semibold text-primary">{item.price}</span><span className="mb-1 font-mono text-xs text-muted-foreground">TRX / TX</span></div>
               <p className="mt-2 text-sm text-muted-foreground">{item.note}</p>
               <Button type="button" variant={item.featured ? "default" : "outline"} onClick={() => { setSelectedEnergy(item.energy); window.location.hash = "order"; }} className="mt-7 w-full rounded-lg">选择这个档位 <ArrowRight size={15} /></Button>
             </article>
@@ -244,7 +237,7 @@ export default function Home() {
           ) : (
             <div className="space-y-5 pt-6">
               <div className="space-y-2"><Label htmlFor="wallet">接收能量的钱包地址</Label><Input id="wallet" required value={wallet} onChange={(event) => setWallet(event.target.value)} placeholder="请输入 TRON 地址（T 开头）" className="h-11 border-border bg-background" /><p className="text-xs text-muted-foreground">只需要公开钱包地址，绝不会索要私钥。</p></div>
-              <div className="space-y-2"><Label>所需能量档位</Label><div className="grid grid-cols-3 gap-2">{packages.map((item) => <button key={item.energy} type="button" onClick={() => setSelectedEnergy(item.energy)} className={`min-w-0 rounded-lg border px-2 py-3 text-center transition-colors ${selectedEnergy === item.energy ? "border-primary bg-primary/10 text-primary" : "border-border text-muted-foreground hover:border-primary/40"}`}><span className="block truncate font-mono text-xs">{item.energy}</span><span className="mt-1 block text-[10px]">{item.price} TRX</span></button>)}</div></div>
+              <div className="space-y-2"><Label>本次转账所需能量</Label><div className="grid grid-cols-3 gap-2">{packages.map((item) => <button key={item.energy} type="button" onClick={() => setSelectedEnergy(item.energy)} className={`min-w-0 rounded-lg border px-2 py-3 text-center transition-colors ${selectedEnergy === item.energy ? "border-primary bg-primary/10 text-primary" : "border-border text-muted-foreground hover:border-primary/40"}`}><span className="block truncate font-mono text-xs">{item.energy}</span><span className="mt-1 block text-[10px]">{item.price} TRX</span></button>)}</div></div>
               <div className="space-y-2"><Label htmlFor="contact">联系方式</Label><Input id="contact" required value={contact} onChange={(event) => setContact(event.target.value)} placeholder="Telegram 用户名或其他联系方式" className="h-11 border-border bg-background" /></div>
               <Button type="submit" size="lg" className="mt-2 h-12 w-full gap-2 rounded-lg">提交需求并联系 Telegram <ArrowRight size={16} /></Button>
               <p className="text-center text-[11px] leading-5 text-muted-foreground">提交即表示你了解：这是人工报价服务，付款前会再次核对收款信息。</p>
