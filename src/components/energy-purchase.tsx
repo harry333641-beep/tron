@@ -16,6 +16,7 @@ import {
   Zap,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { EnergyQuery } from "@/components/energy-query";
 
 type ServiceConfig = {
   telegramUrl: string;
@@ -126,6 +127,8 @@ export function EnergyPurchase({ config }: { config: ServiceConfig }) {
           </div>
         </div>
       </section>
+
+      <EnergyQuery />
 
       <section id="steps" className="relative z-10 border-y border-border bg-card/35">
         <div className="mx-auto max-w-2xl px-5 py-10 sm:px-8 sm:py-14">
